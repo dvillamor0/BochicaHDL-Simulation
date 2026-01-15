@@ -1,0 +1,32 @@
+{
+  "fn main": {
+    "prefix": "main",
+    "body": [
+      "fn main() {",
+      "    println!(\"$1\");",
+      "}"
+    ],
+    "description": "Boilerplate fn main"
+  },
+  "struct impl": {
+    "prefix": "impl",
+    "body": [
+      "impl $1 {",
+      "    pub fn new($2) -> Self {",
+      "        Self { $3 }",
+      "    }",
+      "}"
+    ],
+    "description": "Snippet impl con new"
+  },
+  "tauri command": {
+    "prefix": "tauriCmd",
+    "body": [
+      "#[tauri::command]",
+      "fn $1() -> $2 {",
+      "    $3",
+      "}"
+    ],
+    "description": "Definir comando Tauri"
+  }
+}

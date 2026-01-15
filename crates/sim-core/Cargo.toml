@@ -1,0 +1,8 @@
+[package]
+name = "sim_core"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]
+wgpu = "0.19"
+pollster = "0.3"

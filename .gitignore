@@ -1,0 +1,24 @@
+# Rust
+/target/
+**/*.rs.bk
+
+# Tauri / Frontend
+/src-tauri/target/
+/node_modules/
+/dist/
+
+# Build artifacts
+*.AppImage
+*.exe
+*.msi
+*.dmg
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
