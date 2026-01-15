@@ -4,4 +4,4 @@ version = "0.0.1"
 edition = "2024"
 
 [dependencies]
-sim_core = { path = "../sim-core" }
+cochavira_core = { path = "../cochavira-core" }

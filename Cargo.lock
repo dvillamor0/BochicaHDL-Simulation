@@ -112,6 +112,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fd16c4719339c4530435d38e511904438d07cce7950afa3718a84ac36c10e89e"
 
 [[package]]
+name = "cochavira_core"
+version = "0.0.0"
+dependencies = [
+ "pollster",
+ "wgpu",
+]
+
+[[package]]
 name = "codespan-reporting"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -647,15 +655,7 @@ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 name = "sim-test"
 version = "0.0.1"
 dependencies = [
- "sim_core",
-]
-
-[[package]]
-name = "sim_core"
-version = "0.0.0"
-dependencies = [
- "pollster",
- "wgpu",
+ "cochavira_core",
 ]
 
 [[package]]

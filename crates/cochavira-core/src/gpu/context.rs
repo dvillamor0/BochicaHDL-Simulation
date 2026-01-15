@@ -32,7 +32,7 @@ impl GpuContextImpl {
         let (device, queue) = adapter
             .request_device(
                 &DeviceDescriptor {
-                    label: Some("sim-core device"),
+                    label: Some("cochavira-core device"),
                     required_features: Features::empty(),
                     required_limits: Limits::default(),
                 },

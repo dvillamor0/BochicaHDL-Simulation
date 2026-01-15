@@ -1,4 +1,4 @@
-# Photonic Simulator
+# Bochica
 
 **A Verilog Interpreter for GPU-Accelerated Photonic Hardware Design and Simulation**
 

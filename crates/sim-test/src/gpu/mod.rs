@@ -1,6 +1,6 @@
 // crates/sim-test/src/gpu/mod.rs
 
-use sim_core::api::*;
+use cochavira_core::api::*;
 
 #[test]
 fn gpu_context_can_be_created() {
