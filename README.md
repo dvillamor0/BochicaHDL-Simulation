@@ -44,7 +44,7 @@ The system is composed of two main components: a **simulation backend** and a **
 
 ---
 
-## Backend: Interpretation and Simulation
+## cochavira: Interpretation and Simulation
 
 ### Implementation
 
@@ -65,7 +65,7 @@ The simulation engine uses **wgpu** to execute compute shaders in **headless mod
 
 ---
 
-## Frontend: Visualization and Control
+## Suamox: Visualization and Control
 
 ### Implementation
 
