@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Suamox IDE</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wm">
+      <!-- Sidebar -->
+      <aside class="panel sidebar">
+        <div class="panel-title">
+          <i class="mdi mdi-cube-outline"></i> Files
+        </div>
+
+        <ul class="filetree">
+          <li>
+            <i class="mdi mdi-folder"></i> src
+            <ul>
+              <li><i class="mdi mdi-file-code"></i> main.js</li>
+              <li><i class="mdi mdi-file-code"></i> sim.v</li>
+            </ul>
+          </li>
+          <li><i class="mdi mdi-file-document-outline"></i> index.html</li>
+        </ul>
+      </aside>
+
+      <!-- Editor -->
+      <section class="panel editor">
+        <div class="editor-header">
+          <span class="status-dot"></span>
+          archivo1.ejemplo
+        </div>
+
+        <div class="editor-header">
+          <span class="status-dot"></span>
+          archivo2.ejemplo
+        </div>
+
+        <div class="editor-header">
+          <span class="status-dot"></span>
+          archivo3.ejemplo
+        </div>
+
+        <pre class="code-layer" id="highlight"></pre>
+
+        <textarea class="code-input" id="editor" spellcheck="false">
+// Suamox IDE
+module top;
+  initial begin
+    $display("Hello neon world");
+  end
+endmodule
+</textarea
+        >
+      </section>
+
+      <!-- Canvas -->
+      <section class="panel canvas">
+        <canvas id="gfx"></canvas>
+      </section>
+
+      <!-- Terminal -->
+      <footer class="panel terminal">
+        <div class="terminal-header">
+          <i class="mdi mdi-console"></i> RUN / TERMINAL
+        </div>
+        <pre id="term">$ system ready</pre>
+      </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
