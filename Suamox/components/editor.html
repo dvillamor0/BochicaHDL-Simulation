@@ -1,0 +1,33 @@
+<!-- EDITOR COMPONENT -->
+
+<div class="editor-tabs">
+  <div class="tab active">
+    <span class="status-dot"></span>
+    top.v
+  </div>
+  <div class="tab">
+    <span class="status-dot"></span>
+    alu.v
+  </div>
+  <div class="tab">
+    <span class="status-dot"></span>
+    testbench.v
+  </div>
+</div>
+
+<div class="editor-body">
+  <pre class="code-layer" id="highlight"></pre>
+
+  <textarea class="code-input" id="editor" spellcheck="false">
+// Suamox IDE
+module top;
+  initial begin
+    $display("Hello neon world");
+  end
+endmodule
+</textarea
+  >
+</div>
+
+<script src="js/lexer.js"></script>
+<script src="js/editor.js"></script>
