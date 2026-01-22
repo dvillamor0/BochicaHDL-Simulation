@@ -1,0 +1,266 @@
+/* =========================================================
+   GENERIC UI COMPONENTS
+========================================================= */
+
+/* Buttons */
+.btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(20,22,30,0.8);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.btn:hover {
+  background: rgba(40,44,60,0.9);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--red), var(--yellow));
+  color: #000;
+  font-weight: bold;
+}
+
+.btn.green {
+  background: linear-gradient(135deg, #0f5132, #39ff88);
+  color: #000;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(10,12,18,0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 12px;
+}
+
+/* =========================================================
+   STATUS BAR
+========================================================= */
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 10px;
+  font-size: 11px;
+  background: rgba(8,10,14,0.95);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  color: var(--muted);
+}
+
+.statusbar .indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* LED indicator */
+.led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+/* =========================================================
+   SPLITTERS (RESIZE BARS)
+========================================================= */
+
+.splitter-vertical {
+  width: 4px;
+  background: rgba(255,255,255,0.03);
+  cursor: col-resize;
+}
+
+.splitter-horizontal {
+  height: 4px;
+  background: rgba(255,255,255,0.03);
+  cursor: row-resize;
+}
+
+.splitter-vertical:hover,
+.splitter-horizontal:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* =========================================================
+   TABS (generic, not only editor)
+========================================================= */
+
+.tabs {
+  display: flex;
+  background: rgba(10,12,18,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.tabs .tab {
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.tabs .tab.active {
+  color: var(--text);
+  border-bottom: 2px solid var(--green);
+}
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-header {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--green);
+  background: rgba(10,12,18,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* =========================================================
+   FILE TREE COMPONENTS
+========================================================= */
+
+.filetree-folder {
+  font-weight: bold;
+  color: var(--cyan);
+}
+
+.filetree-file {
+  color: var(--muted);
+}
+
+.filetree-file.active {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+}
+
+/* =========================================================
+   TERMINAL COMPONENTS
+========================================================= */
+
+.terminal-output {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  padding: 6px;
+  color: #9aff9a;
+}
+
+.terminal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  outline: none;
+}
+
+/* =========================================================
+   FLOATING PANELS (DEBUG / GPU VIEW)
+========================================================= */
+
+.float-panel {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 320px;
+  height: 220px;
+  background: rgba(15,18,30,0.95);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+  backdrop-filter: blur(16px);
+  z-index: 100;
+}
+
+/* =========================================================
+   SCROLLBARS (VSCode style)
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+  height: 32px;
+  background: #0b0f14;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  user-select: none;
+}
+
+.menu-bar {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.menu-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Dropdown */
+.menu-dropdown {
+  position: absolute;
+  top: 32px;
+  background: #0f1117;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  padding: 6px 0;
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 9999;
+}
+
+.menu-option {
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.menu-option:hover {
+  background: #1f2937;
+}
+
+.menu-sep {
+  height: 1px;
+  background: #1f2937;
+  margin: 4px 0;
+}
+

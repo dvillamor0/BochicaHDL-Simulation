@@ -1,0 +1,14 @@
+{
+  "permissions": [
+    "fs:read",
+    "fs:write",
+    "fs:read_dir",
+    "dialog:open",
+    "dialog:save"
+  ],
+  "scope": {
+    "fs": {
+      "allow": ["$HOME", "$APPDATA", "$LOCALAPPDATA", "**"]
+    }
+  }
+}

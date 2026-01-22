@@ -3,7 +3,7 @@
 **/*.rs.bk
 
 # Tauri / Frontend
-/src-tauri/target/
+/suamox/target/
 /node_modules/
 /dist/
 

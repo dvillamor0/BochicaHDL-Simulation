@@ -1,28 +1,27 @@
-/* =========================================================
-   SUAMOX GLOBAL STATE (EVENT BUS)
-========================================================= */
-
 const State = (() => {
   const state = {
     activeFile: null,
-    files: {}, // filename -> content
+    files: {},
+
+    workspace: null,
+    fileTree: [],
+
     listeners: {},
   };
 
-  /* Subscribe to event */
+  /* ================= EVENTS ================= */
+
   function on(event, handler) {
-    if (!state.listeners[event]) {
-      state.listeners[event] = [];
-    }
+    if (!state.listeners[event]) state.listeners[event] = [];
     state.listeners[event].push(handler);
   }
 
-  /* Emit event */
   function emit(event, payload) {
-    (state.listeners[event] || []).forEach((fn) => fn(payload));
+    (state.listeners[event] || []).forEach(fn => fn(payload));
   }
 
-  /* Open or activate a file */
+  /* ================= FILES ================= */
+
   function openFile(name, content = "") {
     if (!state.files[name]) {
       state.files[name] = content;
@@ -32,7 +31,6 @@ const State = (() => {
     emit("file:activated", { name });
   }
 
-  /* Update current file content */
   function updateContent(content) {
     if (!state.activeFile) return;
     state.files[state.activeFile] = content;
@@ -42,7 +40,6 @@ const State = (() => {
     });
   }
 
-  /* Get active file */
   function getActiveFile() {
     return {
       name: state.activeFile,
@@ -50,11 +47,37 @@ const State = (() => {
     };
   }
 
+  /* ================= WORKSPACE ================= */
+
+  function setWorkspace(path) {
+    state.workspace = path;
+    emit("workspace:set", path);
+  }
+
+  function getWorkspace() {
+    return state.workspace;
+  }
+
+  function setFileTree(tree) {
+    state.fileTree = tree;
+    emit("tree:updated", tree);
+  }
+
+  function getFileTree() {
+    return state.fileTree;
+  }
+
   return {
     on,
     emit,
+
     openFile,
     updateContent,
     getActiveFile,
+
+    setWorkspace,
+    getWorkspace,
+    setFileTree,
+    getFileTree,
   };
 })();

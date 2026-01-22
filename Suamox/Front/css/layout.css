@@ -1,16 +1,24 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* =========================================================
    WINDOW MANAGER LAYOUT
 ========================================================= */
 
 .wm {
+  flex: 1;
   display: grid;
   grid-template-columns: 220px 1fr 420px;
   grid-template-rows: 1fr 180px;
-  height: 100vh;
-  width: 100vw;
   gap: 12px;
   padding: 12px;
 }
+
+
 
 /* =========================================================
    PANELS
@@ -18,22 +26,38 @@
 
 .panel {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Sidebar */
 .sidebar {
   grid-row: 1 / span 2;
+  min-width: 180px;
+}
+
+/* Editor */
+.editor {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Canvas */
+.canvas {
+  position: relative;
+}
+
+.canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
 }
 
 /* Terminal */
 .terminal {
   grid-column: 2 / span 2;
-}
-
-/* Canvas */
-.canvas canvas {
-  width: 100%;
-  height: 100%;
+  min-height: 120px;
 }
 
 /* =========================================================
@@ -46,13 +70,12 @@
   overflow: hidden;
 }
 
-/* ===== Tabs ===== */
-
+/* Tabs bar */
 .editor-tabs {
   display: flex;
   height: 32px;
-  background: #0b0f14;
-  border-bottom: 1px solid #1f2937;
+  background: rgba(10,12,18,0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 /* Single tab */
@@ -60,23 +83,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
   padding: 6px 14px;
   font-size: 13px;
   cursor: pointer;
-
-  color: #9ca3af;
-  background: #0b0f14;
-  border-right: 1px solid #1f2937;
-
+  color: var(--muted);
+  border-right: 1px solid rgba(255,255,255,0.05);
   user-select: none;
+  transition: 0.15s;
 }
 
 /* Active tab */
 .tab.active {
   background: linear-gradient(90deg, #7f1d1d, #064e3b);
-  color: #e5e7eb;
-  box-shadow: inset 0 -2px 0 #22c55e;
+  color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--green);
 }
 
 /* Status dot */
@@ -84,28 +104,45 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
 }
 
-/* ===== Editor body ===== */
+/* =========================================================
+   EDITOR BODY
+========================================================= */
 
 .editor-body {
-  position: relative; /* 🔑 CRÍTICO */
+  position: relative;
   flex: 1;
   overflow: hidden;
 }
 
-/* ===== Code layers ===== */
-
+/* Code layers */
 .code-layer,
 .code-input {
   position: absolute;
   inset: 0;
-
   padding: 14px;
   font-size: 14px;
   line-height: 1.5;
   white-space: pre;
   overflow: auto;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* =========================================================
+   RESIZE SPLITTERS PLACEHOLDER
+========================================================= */
+
+.splitter-vertical {
+  width: 4px;
+  background: rgba(255,255,255,0.03);
+  cursor: col-resize;
+}
+
+.splitter-horizontal {
+  height: 4px;
+  background: rgba(255,255,255,0.03);
+  cursor: row-resize;
 }
