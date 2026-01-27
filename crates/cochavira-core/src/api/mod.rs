@@ -1,19 +1,23 @@
-mod error;
-pub use self::error::GpuError;
+use crate::kernel::router::KernelRouter;
+pub use crate::kernel::syscall::*;
+use crate::model::simulation::Simulation;
+pub mod error;
+pub use error::GpuError;
 
-pub struct GpuContext {
-    inner: crate::gpu::context::GpuContextImpl,
+pub struct CochaviraEngine {
+    kernel: KernelRouter,
+    sim: Simulation,
 }
 
-impl GpuContext {
-    pub fn new() -> Result<Self, GpuError> {
-        let inner = pollster::block_on(crate::gpu::context::GpuContextImpl::new_async())
-            .map_err(|_| GpuError::not_available())?;
-
-        Ok(Self { inner })
+impl CochaviraEngine {
+    pub fn new_gpu() -> Result<Self, crate::api::GpuError> {
+        Ok(Self {
+            kernel: KernelRouter::new_gpu()?,
+            sim: Simulation::new(),
+        })
     }
 
-    pub fn is_ready(&self) -> bool {
-        self.inner.is_ready()
+    pub fn request(&mut self, req: EngineRequest) -> EngineResponse {
+        self.kernel.handle(&mut self.sim, req)
     }
 }

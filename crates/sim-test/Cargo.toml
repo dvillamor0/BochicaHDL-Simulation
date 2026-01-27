@@ -4,4 +4,8 @@ version = "0.0.1"
 edition = "2024"
 
 [dependencies]
-cochavira_core = { path = "../cochavira-core" }
+cochavira_core = { path = "../cochavira-core", features = ["gpu"] }
+
+[dev-dependencies]
+criterion = "0.5"
+
