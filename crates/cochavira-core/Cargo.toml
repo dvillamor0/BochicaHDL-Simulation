@@ -1,8 +1,16 @@
 [package]
 name = "cochavira_core"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2024"
 
 [dependencies]
-wgpu = "0.19"
+wgpu = { version = "0.19", optional = true }
+pollster = { version = "0.3", optional = true }
+
+[features]
+default = []
+gpu = ["wgpu", "pollster"]
+cpu = []
+
+[dev-dependencies]
 pollster = "0.3"

@@ -1,6 +1,5 @@
 pub mod api;
 
-mod gpu;
-mod math;
-mod geometry;
-mod simulation;
+mod backend;
+mod kernel;
+mod model;
