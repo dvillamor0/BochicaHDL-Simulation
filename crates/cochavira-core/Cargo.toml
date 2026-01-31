@@ -4,14 +4,9 @@ version = "0.0.1"
 edition = "2024"
 
 [dependencies]
-wgpu = { version = "0.19", optional = true }
-pollster = { version = "0.3", optional = true }
+wgpu = { version = "0.19" }
+pollster = { version = "0.3" }
+sv-parser = "0.13.4"
 
 [features]
 default = []
-hdl = ["sv-parser"]
-gpu = ["wgpu", "pollster"]
-cpu = []
-
-[dev-dependencies]
-pollster = "0.3"

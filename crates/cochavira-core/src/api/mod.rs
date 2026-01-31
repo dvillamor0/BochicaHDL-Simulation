@@ -1,6 +1,7 @@
 use crate::kernel::router::KernelRouter;
 pub use crate::kernel::syscall::*;
 use crate::model::simulation::Simulation;
+pub use crate::hdl::analysis::analyze_sv;
 pub mod error;
 pub use error::GpuError;
 

@@ -125,6 +125,20 @@ export function replace() {
   console.warn("TODO: implement Replace dialog");
 }
 
+export async function analyzeSV(source) {
+  if (!invoke) {
+    console.warn("[EDITOR] invoke not available");
+    return null;
+  }
+
+  try {
+    return await invoke("sv_analyze", { source });
+  } catch (err) {
+    console.error("[EDITOR] sv_analyze failed:", err);
+    return null;
+  }
+}
+
 /* ================= SIMULATION ================= */
 
 export async function runSim() {

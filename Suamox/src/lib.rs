@@ -12,3 +12,8 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+#[tauri::command]
+fn sv_analyze(source: String) -> Result<SemanticResult, String> {
+    cochavira_core::api::analyze_sv_source(&source)
+}
