@@ -1,7 +1,6 @@
-mod semantic;
-mod sv_analyzer;
+mod lexer;
 mod types;
+mod analyze;
 
-pub(crate) use semantic::SemanticResult;
-pub(crate) use sv_analyzer::analyze_sv;
-pub(crate) use types::{SemanticToken, SemanticTokenKind};
+pub(crate) use analyze::analyze_sv;
+pub(crate) use types::SemanticResult;

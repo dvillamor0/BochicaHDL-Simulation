@@ -1,43 +1,46 @@
 use cochavira_core::api::*;
 
-#[test]
-fn sv_analysis_produces_semantic_tokens() {
-    let source = r#"
-        module adder (
-            input logic a,
-            input logic b,
-            output logic y
-        );
-            assign y = a ^ b;
-        endmodule
-    "#;
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    let result = analyze_sv(source);
+    #[test]
+    fn keyword_and_identifier() {
+        let code = "module test;";
+        let mut engine = CochaviraEngine::new_gpu().unwrap();
 
-    assert!(
-        result.is_ok(),
-        "SystemVerilog analysis must succeed"
-    );
+        match engine.request(EngineRequest::AnalyzeSv(code.to_string())) {
+            EngineResponse::Semantic(res) => {
+                assert!(res.tokens.iter().any(|t| t.kind == "keyword"));
+                assert!(res.tokens.iter().any(|t| t.kind == "identifier"));
+            }
+            other => panic!("unexpected response: {:?}", other),
+        }
+    }
 
-    let semantic = result.unwrap();
-    let tokens = semantic.tokens();
+    #[test]
+    fn numbers_and_ops() {
+        let code = "a = 42;";
+        let mut engine = CochaviraEngine::new_gpu().unwrap();
 
-    assert!(
-        !tokens.is_empty(),
-        "Semantic analysis must produce tokens"
-    );
+        match engine.request(EngineRequest::AnalyzeSv(code.to_string())) {
+            EngineResponse::Semantic(res) => {
+                assert!(res.tokens.iter().any(|t| t.kind == "number"));
+            }
+            other => panic!("unexpected response: {:?}", other),
+        }
+    }
 
-    for tok in tokens {
-        assert!(
-            tok.span.0 < tok.span.1,
-            "Token span must be non-empty: {:?}",
-            tok
-        );
+    #[test]
+    fn comment() {
+        let code = "// hello\nmodule x;";
+        let mut engine = CochaviraEngine::new_gpu().unwrap();
 
-        assert!(
-            tok.span.1 <= source.len(),
-            "Token span out of bounds: {:?}",
-            tok
-        );
+        match engine.request(EngineRequest::AnalyzeSv(code.to_string())) {
+            EngineResponse::Semantic(res) => {
+                assert!(res.tokens.iter().any(|t| t.kind == "comment"));
+            }
+            other => panic!("unexpected response: {:?}", other),
+        }
     }
 }

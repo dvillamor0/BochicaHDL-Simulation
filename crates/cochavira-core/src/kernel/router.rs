@@ -26,6 +26,23 @@ impl KernelRouter {
                 self.kernel.step(sim);
                 EngineResponse::Ok
             }
+            EngineRequest::AnalyzeSv(source) => {
+                match crate::hdl::analyze_sv(&source) {
+                    Ok(res) => {
+                        let tokens = res.tokens.into_iter().map(|t| {
+                            crate::api::SemanticToken {
+                                kind: t.kind.to_string(),
+                                span: (t.span.0, t.span.1),
+                            }
+                        }).collect();
+
+                        EngineResponse::Semantic(
+                            crate::api::SemanticResult { tokens }
+                        )
+                    }
+                    Err(_) => EngineResponse::SemanticError,
+                }
+            }
         }
     }
 }
