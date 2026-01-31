@@ -1,149 +1,160 @@
 # Bochica
 
-**A Verilog Interpreter for GPU-Accelerated Photonic Hardware Design and Simulation**
+**A research platform for Verilog-based photonic hardware modeling and GPU-accelerated simulation**
+
+---
 
 ## Overview
 
-This project implements a complete software platform for the **design, simulation, and analysis of photonic hardware**, using **Verilog** as a high-level hardware description language and a **GPU-accelerated physical and logical simulation engine**.
+Bochica is an experimental software platform for **designing, simulating, and analyzing photonic hardware** using **Verilog** as a high-level description language and a **GPU-accelerated simulation backend**.
 
-The system translates Verilog descriptions into **photonic circuit structures**, allowing explicit definition of **material properties**, **laser source parameters**, and **geometric configurations**. Simulations model both logical behavior and relevant physical effects in the photonic domain.
+The project explores how digital hardware description languages can be extended to **photonic computing architectures**, enabling structured experimentation with optical devices, materials, and circuit topologies.
 
-The platform supports the creation and validation of **fully programmable photonic hardware**, including combinational circuits, sequential circuits, complete photonic CPUs, and photonic FPGAs.
+Verilog descriptions are translated into **photonic circuit representations**, combining logical abstractions with simplified physical modeling.
 
 ---
 
 ## Purpose
 
-The primary purpose of this project is to provide a unified workflow to:
+This project is research-oriented and aims to:
 
-- Interpret **Verilog HDL** in a photonic computing context
-- Generate coherent physical and logical photonic models
-- Execute high-complexity simulations using **massively parallel GPU computation**
-- Visualize and analyze simulation results interactively
-- Support research and development of programmable photonic hardware
+- Explore **Verilog as a front-end for photonic hardware modeling**
+- Build an intermediate representation for **photonic circuit structures**
+- Implement a **scalable GPU-based simulation kernel**
+- Provide tools for visualization and interaction with photonic designs
+- Enable experimentation with **programmable photonic architectures**
+
+Bochica is **not intended to replace professional EDA tools**, but to serve as a **research and prototyping framework**.
 
 ---
 
 ## System Architecture
 
-The system is composed of two main components: a **simulation backend** and a **visualization frontend**, with a strict separation of responsibilities.
+Bochica follows a layered architecture with strict separation of concerns:
 
 ```
 [ Verilog HDL ]
-      ↓
+↓
 [ HDL Interpreter ]
-      ↓
+↓
 [ Photonic Intermediate Model ]
-      ↓
-[ Physical & Logical Simulation (GPU) ]
-      ↓
-[ Structured Results ]
-      ↓
-[ Desktop Application ]
+↓
+[ Physical & Logical Simulation Kernel (GPU) ]
+↓
+[ Structured Results / API ]
+↓
+[ Desktop Visualization Client ]
 ```
 
 ---
 
-## cochavira: Interpretation and Simulation
+## cochavira: Core Interpretation and Simulation
 
 ### Implementation
 
-The backend is implemented in **Rust**, providing memory safety, explicit concurrency control, and high performance.
+The backend is implemented in **Rust**, focusing on:
+
+- memory safety  
+- deterministic architecture boundaries  
+- explicit APIs between layers  
 
 ### Responsibilities
 
-- Verilog interpretation
-- Photonic topology generation
-- Material and optical source modeling
-- Physical and logical simulation
-- Large-scale mathematical computation on the GPU
-- Data preparation for visualization
+- Verilog parsing and interpretation  
+- Photonic topology and structure modeling  
+- Material and optical source abstractions  
+- Logical and simplified physical simulation  
+- GPU compute execution via **wgpu**  
+- Data serialization for external consumers  
 
 ### GPU Computing
 
-The simulation engine uses **wgpu** to execute compute shaders in **headless mode**, without reliance on graphics rendering pipelines.
+The simulation kernel uses **wgpu in compute mode**, running headless without graphics pipelines.  
+Backends are **feature-gated**, allowing future CPU or alternative accelerator implementations.
 
 ---
 
-## Suamox: Visualization and Control
+## Suamox: Visualization and Control Layer
 
 ### Implementation
 
-The frontend is delivered as a **desktop application** built with **Tauri**, using web technologies for the user interface.
+The visualization layer is implemented as a **Tauri-based desktop application**, using web technologies for UI.
 
 ### Responsibilities
 
-- 2D, 2.5D, and 3D visualization of photonic circuits
-- Layer-based inspection
-- Editing of physical properties and simulation parameters
-- Simulation control and execution management
-- Analysis of simulation outputs
+- Visualization of photonic circuits (2D / 2.5D / 3D)  
+- Layer inspection and parameter editing  
+- Simulation control and orchestration  
+- Interactive analysis of simulation outputs  
 
-The frontend performs no heavy computation and acts strictly as a visualization and interaction layer.
+All heavy computation remains in the backend; the frontend is intentionally lightweight.
 
 ---
 
 ## Design Principles
 
-### Strict Separation
+### Layered Architecture
 
-- Backend: all computation and simulation
-- Frontend: interaction and visualization
-- Communication via explicit and well-defined interfaces
+- **API layer**: stable external interface  
+- **Kernel layer**: routing and execution semantics  
+- **Backend layer**: hardware-specific drivers (GPU, future CPU)  
+- **Model layer**: mathematical and geometric representations  
 
-### Performance and Scalability
+### Black-Box Engine Philosophy
 
-- GPU-optimized simulation pipeline
-- Efficient use of computational resources
-- Responsive and stable user interface during long simulations
+The engine exposes **request/response APIs**, not internal structures.  
+Consumers (tests, UI, external tools) interact through **explicit syscall-like APIs**.
 
----
+### Research-Oriented Modularity
 
-## System Capabilities
-
-- Definition of photonic material properties
-- Configuration of laser sources (frequency, power, phase)
-- Optical propagation simulation
-- Logical behavior evaluation
-- Design and simulation of:
-
-  - photonic combinational circuits
-  - photonic sequential circuits
-  - complete photonic CPUs
-  - photonic FPGAs
+- Feature-gated backends  
+- Minimal coupling between layers  
+- Deterministic and inspectable architecture  
 
 ---
 
-## Use Cases
+## Current Capabilities
 
-- Photonic computing research
-- Experimental photonic hardware design
-- Validation of programmable photonic architectures
-- Integrated physical-logical simulation
-- Academic research and advanced prototyping
+- Verilog-based circuit description  
+- Photonic intermediate representation  
+- GPU compute backend (headless)  
+- Public request/response engine API  
+- Structured test infrastructure  
+- Modular Rust crate architecture  
+
+---
+
+## Intended Use Cases
+
+- Academic research in photonic computing  
+- Experimental hardware architecture design  
+- Simulation of hybrid logical–physical systems  
+- Prototyping of photonic CPUs / FPGAs concepts  
+- Teaching and exploration of photonic computation models  
 
 ---
 
 ## Project Status
 
-The project is under **active development**.
+**Early research-stage project.**
 
-Currently implemented:
+Implemented:
 
-- Core system architecture and module boundaries
-- Verilog interpretation pipeline
-- Photonic intermediate representation
-- GPU-accelerated simulation backend (headless)
-- Encapsulated public API
-- External test infrastructure
+- Layered core architecture (`api`, `kernel`, `backend`, `model`)  
+- Kernel router and syscall-like engine interface  
+- GPU backend abstraction  
+- Verilog interpretation pipeline (baseline)  
+- External test harness  
 
-Work in progress:
+In progress:
 
-- Extended physical models and material libraries
-- Advanced simulation scenarios
-- Desktop application UI integration
-- Visualization and interaction workflows
+- Extended physical optical models  
+- Numerical solvers and PDE kernels  
+- Material and device libraries  
+- Visualization workflows in Suamox  
+- Documentation and reproducible experiments  
 
+---
 ## License
 
 This project is released under the **MIT License** and is intended to be used, modified, and extended as an **open-source research and development platform**.
