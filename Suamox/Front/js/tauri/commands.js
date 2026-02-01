@@ -11,11 +11,9 @@ const getCurrent = () => T?.window?.getCurrentWindow?.();
 const fs = T?.fs;
 const dialog = T?.dialog;
 
-// dialog API
 const open = dialog?.open;
 const save = dialog?.save;
 
-// fs API
 const readTextFile = fs?.readTextFile;
 const writeFile = fs?.writeFile;
 const readDir = fs?.readDir;
@@ -23,7 +21,6 @@ const readDir = fs?.readDir;
 import * as State from "../core/state.js";
 
 /* ================= UTILS ================= */
-
 function assertAPI(name, fn) {
   if (!fn) {
     console.error(`[TAURI] Missing API: ${name}`);
@@ -53,7 +50,9 @@ export async function openFile() {
   if (!assertAPI("fs.readTextFile", readTextFile)) return;
 
   const data = await readTextFile(path);
-  State.openFile(path.split(/[/\\]/).pop(), data);
+  // normalize name as basename
+  const name = path.split(/[/\\]/).pop();
+  State.openFile(name, data);
 }
 
 export async function openDir() {
@@ -82,7 +81,7 @@ export async function saveFile() {
   if (!assertAPI("dialog.save", save)) return;
   if (!assertAPI("fs.writeFile", writeFile)) return;
 
-  const path = await save({ defaultPath: f.name });
+  const path = await save({ defaultPath: f.path });
   if (!path) return;
 
   await writeFile({ path, contents: f.content });
@@ -132,7 +131,9 @@ export async function analyzeSV(source) {
   }
 
   try {
-    return await invoke("sv_analyze", { source });
+    const result = await invoke("sv_analyze", { source });
+    console.log("[SV_ANALYZE RESULT]", result);
+    return result;
   } catch (err) {
     console.error("[EDITOR] sv_analyze failed:", err);
     return null;

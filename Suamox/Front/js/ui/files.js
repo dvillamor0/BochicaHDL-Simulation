@@ -1,8 +1,9 @@
-window.Workspace = (() => {
+import * as State from "../core/state.js";
 
+window.Workspace = (() => {
   const T = window.__TAURI__;
-  const dialog = T.dialog;
-  const fs = T.fs;
+  const dialog = T?.dialog;
+  const fs = T?.fs;
 
   async function openWorkspace() {
     const folder = await dialog.open({ directory: true });
@@ -11,11 +12,12 @@ window.Workspace = (() => {
     State.setWorkspace(folder);
 
     const tree = await fs.readDir(folder, { recursive: true });
-    State.setFileTree(tree);
+    const safeTree = JSON.parse(JSON.stringify(tree));
+    State.setFileTree(safeTree);
   }
 
   State.on("tree:updated", tree => {
-    const el = document.querySelector(".filetree");
+    const el = document.querySelector(".file-tree");
     if (!el) return;
     el.innerHTML = renderTree(tree);
   });
@@ -26,11 +28,9 @@ window.Workspace = (() => {
 
   function renderNode(n) {
     if (n.children) {
-      return `
-        <li class="folder">${n.name}
-          ${renderTree(n.children)}
-        </li>`;
+      return `<li class="folder">${n.name}${renderTree(n.children)}</li>`;
     }
+    // for files we store the full path in data-path to let State.openFile use basename when reading
     return `<li class="file" data-path="${n.path}">${n.name}</li>`;
   }
 
@@ -40,12 +40,9 @@ window.Workspace = (() => {
 
     const path = file.dataset.path;
     const content = await fs.readTextFile(path);
-
-    State.openFile(path, content);
-  });
-
-  State.on("file:opened", ({ content }) => {
-    SuamoxEditor.setValue(content);
+    // openFile expects a normalized name (we keep basename to maintain tab naming consistent)
+    const name = path.split(/[/\\]/).pop();
+    State.openFile(name, content);
   });
 
   return { openWorkspace };
