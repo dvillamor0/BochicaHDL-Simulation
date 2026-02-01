@@ -1,19 +1,25 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+use tauri::{State};
+use serde_json::json;
+use cochavira_core::api::{CochaviraEngine, EngineRequest, EngineResponse};
+use std::sync::Mutex;
+
+pub struct AppState {
+    pub engine: Mutex<CochaviraEngine>,
 }
 
-#[cfg_attr(mobile, tauri::mobile_entry_point)]
-pub fn run() {
-    tauri::Builder::default()
-        .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
-}
+pub fn sv_analyze_impl(source: String, state: State<AppState>) -> Result<String, String> {
+    let mut engine = state.engine.lock().unwrap();
 
-#[tauri::command]
-fn sv_analyze(source: String) -> Result<SemanticResult, String> {
-    cochavira_core::api::analyze_sv_source(&source)
+    match engine.request(EngineRequest::AnalyzeSv(source)) {
+        EngineResponse::Semantic(res) => {
+            let tokens_json: Vec<serde_json::Value> = res
+                .tokens
+                .iter()
+                .map(|t| json!({ "kind": t.kind, "span": [t.span.0, t.span.1] }))
+                .collect();
+            serde_json::to_string(&tokens_json).map_err(|e| e.to_string())
+        }
+        EngineResponse::SemanticError => Err("Semantic analysis failed".into()),
+        other => Err(format!("Unexpected engine response: {:?}", other)),
+    }
 }

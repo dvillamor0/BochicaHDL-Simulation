@@ -112,23 +112,69 @@ body {
    EDITOR BODY
 ========================================================= */
 
+/* Editor body positioning */
 .editor-body {
   position: relative;
   flex: 1;
   overflow: hidden;
 }
 
-/* Code layers */
+/* Line numbers column */
+#line-numbers, #lines, .line-numbers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 56px; 
+  padding: 14px 8px;
+  margin: 0;
+  text-align: right;
+  color: var(--muted);
+  background: transparent;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+/* Code layers shifted right to leave space for gutter */
 .code-layer,
 .code-input {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 56px;
   padding: 14px;
   font-size: 14px;
   line-height: 1.5;
   white-space: pre;
   overflow: auto;
   font-family: "JetBrains Mono", monospace;
+  box-sizing: border-box;
+}
+
+/* Highlight (rendered HTML) */
+.code-layer {
+  pointer-events: none;
+  color: var(--text);
+  z-index: 1;
+  background: transparent;
+}
+
+/* Textarea */
+.code-input {
+  background: transparent;
+  color: transparent; /* hide underlying text so highlight shows colored spans */
+  caret-color: var(--green);
+  border: none;
+  outline: none;
+  resize: none;
+  z-index: 2;
 }
 
 /* =========================================================
